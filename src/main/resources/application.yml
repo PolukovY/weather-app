@@ -4,7 +4,7 @@ weather:
   url: ${WEATHER_URL:https://api.openweathermap.org/data/2.5/weather}
   connect-timeout: ${WEATHER_CONNECTION_TIMEOUT:700}
   read-timeout: ${WEATHER_READ_TIMEOUT:700}
-  api-key: ${WEATHER_API_KEY:674a0f249e7ce2e10eafd9d6bc9469d7}
+  api-key: ${WEATHER_API_KEY:changeMe}
   timeout-seconds: ${WEATHER_TIMEOUT_SECONDS:5}
   cache-enabled: ${WEATHER_CACHE_ENABLED:true}
   delay-enabled: ${WEATHER_DELAY_ENABLED:true}
