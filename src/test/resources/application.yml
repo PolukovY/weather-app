@@ -1,0 +1,15 @@
+
+
+weather:
+  url: ${WEATHER_URL:http://localhost:9001/data/2.5/weather}
+  connect-timeout: ${WEATHER_CONNECTION_TIMEOUT:700}
+  read-timeout: ${WEATHER_READ_TIMEOUT:700}
+  api-key: ${WEATHER_API_KEY:test_api_key}
+  timeout-seconds: ${WEATHER_TIMEOUT_SECONDS:5}
+  cache-enabled: ${WEATHER_CACHE_ENABLED:false}
+  delay-enabled: ${WEATHER_DELAY_ENABLED:false}
+  weather-cache-properties:
+    duration-in-days:  ${WEATHER_CACHE_DURATION_IN_DAYS:1}
+    maximum-size: ${WEATHER_CACHE_MAXIMUM_SIZE:10}
+server:
+  port: ${WEATHER_SERVER_PORT:9000}
