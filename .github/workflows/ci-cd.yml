@@ -1,0 +1,24 @@
+name: Running default CI for Alexandr
+
+on:
+  push:
+    branches: [ "master", "dev" ]
+  pull_request:
+    branches: [ "master", "dev" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          cache: maven
+
+      - name: Run tests
+        run: ./mvnw clean test
