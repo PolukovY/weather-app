@@ -2,6 +2,8 @@ package com.levik.weather.api;
 
 import com.levik.weather.client.model.WeatherCountries;
 import com.levik.weather.service.WeatherService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +23,22 @@ public class WeatherController {
     private final WeatherService futureWeatherService;
     private final WeatherService complitableFutureWeatherService;
 
+    @Operation(summary = "Get future weather by countries", description = "Returns future weather details for the provided countries.")
     @GetMapping("/futureWeather")
-    public ResponseEntity<WeatherCountries> getFutureWeather(@RequestParam("countries") String countries) {
+    public ResponseEntity<WeatherCountries> getFutureWeather(
+            @Parameter(description = "Comma-separated list of country codes", required = true)
+            @RequestParam("countries") String countries) {
         Objects.requireNonNull(countries);
         String[] items = countries.split(SEPARATOR);
         return ResponseEntity.ok(new WeatherCountries(futureWeatherService.getWeathersByCountries(Arrays.asList(items))));
     }
 
+    @Operation(summary = "Get future weather by countries using CompletableFuture",
+            description = "Returns future weather details for the provided countries using CompletableFuture.")
     @GetMapping("/completableFutureWeather")
-    public ResponseEntity<WeatherCountries> getCompletableFutureWeatherService(@RequestParam("countries") String countries) {
+    public ResponseEntity<WeatherCountries> getCompletableFutureWeatherService(
+            @Parameter(description = "Comma-separated list of country codes", required = true)
+            @RequestParam("countries") String countries) {
         Objects.requireNonNull(countries);
         String[] items = countries.split(SEPARATOR);
         return ResponseEntity.ok(new WeatherCountries(complitableFutureWeatherService.getWeathersByCountries(Arrays.asList(items))));

@@ -1,4 +1,5 @@
 spring.application.name: ${WEATHER_APPLICATION_NAME:weather-app}
+springdoc.api-docs.enabled: true
 
 weather:
   url: ${WEATHER_URL:https://api.openweathermap.org/data/2.5/weather}
