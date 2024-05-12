@@ -12,21 +12,21 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col">
-            <h2>Get Future Weather by Countries</h2>
+            <h2>Get Weather using Future</h2>
             <div class="form-group">
                 <label for="futureCountries">Enter Country Codes (comma-separated):</label>
                 <input type="text" class="form-control" id="futureCountries">
             </div>
-            <button type="button" class="btn btn-primary" id="getFutureWeatherBtn">Get Future Weather</button>
+            <button type="button" class="btn btn-primary" id="getFutureWeatherBtn">Get Weather</button>
             <div id="futureWeatherResult" class="mt-3"></div>
         </div>
         <div class="col">
-            <h2>Get Future Weather using CompletableFuture</h2>
+            <h2>Get Weather using Completable</h2>
             <div class="form-group">
                 <label for="completableFutureCountries">Enter Country Codes (comma-separated):</label>
                 <input type="text" class="form-control" id="completableFutureCountries">
             </div>
-            <button type="button" class="btn btn-primary" id="getCompletableFutureWeatherBtn">Get CompletableFuture Weather</button>
+            <button type="button" class="btn btn-primary" id="getCompletableFutureWeatherBtn">Get Weather</button>
             <div id="completableFutureWeatherResult" class="mt-3"></div>
         </div>
     </div>
@@ -43,7 +43,7 @@
                 url: "/api/v1/futureWeather?countries=" + countries,
                 type: "GET",
                 success: function (data) {
-                    var result = "<h4>Future Weather Details:</h4><ul>";
+                    let result = "<h4>Future Weather Details:</h4><ul>";
                     $.each(data.weatherCountries, function (index, weatherCountry) {
                         result += "<li>Country: " + weatherCountry.country + ", City: " + weatherCountry.city + ", Temperature: " + weatherCountry.currentTemperature + "</li>";
                     });
@@ -63,7 +63,7 @@
                 url: "/api/v1/completableFutureWeather?countries=" + countries,
                 type: "GET",
                 success: function (data) {
-                    var result = "<h4>CompletableFuture Weather Details:</h4><ul>";
+                    let result = "<h4>CompletableFuture Weather Details:</h4><ul>";
                     $.each(data.weatherCountries, function (index, weatherCountry) {
                         result += "<li>Country: " + weatherCountry.country + ", City: " + weatherCountry.city + ", Temperature: " + weatherCountry.currentTemperature + "</li>";
                     });
