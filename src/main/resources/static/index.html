@@ -36,44 +36,57 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Function to handle AJAX request for future weather
+        function showLoader(element) {
+            $(element).html("<p>Loading...</p>");
+        }
+
+        function hideLoader(element) {
+            $(element).empty();
+        }
+
+        function getWeather(endpoint, countries, resultElement) {
+            showLoader(resultElement.resultSelector);
+            $.ajax({
+                url: endpoint + "?countries=" + countries,
+                type: "GET",
+                success: function (data) {
+                    let result = "<h4>" + resultElement.dataTitle + ":</h4><ul>";
+                    $.each(data.weatherCountries, function (index, weatherCountry) {
+                        result += "<li>Country: " +
+                            weatherCountry.country +
+                            ", City: " + weatherCountry.city +
+                            ", Temperature: " + weatherCountry.currentTemperature +
+                            "</li>";
+                    });
+                    result += "</ul>";
+                    hideLoader(resultElement.resultSelector);
+                    $(resultElement.resultSelector).html(result);
+                },
+                error: function (xhr, status, error) {
+                    $(resultElement.resultSelector).html("<p>Error retrieving weather data.</p>");
+                    hideLoader(resultElement.resultSelector);
+                }
+            });
+        }
+
         $("#getFutureWeatherBtn").click(function () {
             const countries = $("#futureCountries").val();
-            $.ajax({
-                url: "/api/v1/futureWeather?countries=" + countries,
-                type: "GET",
-                success: function (data) {
-                    let result = "<h4>Future Weather Details:</h4><ul>";
-                    $.each(data.weatherCountries, function (index, weatherCountry) {
-                        result += "<li>Country: " + weatherCountry.country + ", City: " + weatherCountry.city + ", Temperature: " + weatherCountry.currentTemperature + "</li>";
-                    });
-                    result += "</ul>";
-                    $("#futureWeatherResult").html(result);
-                },
-                error: function (xhr, status, error) {
-                    $("#futureWeatherResult").html("<p>Error retrieving weather data.</p>");
-                }
-            });
+            const endpoint = "/api/v1/futureWeather";
+            const resultElement = {
+                dataTitle: "Future Weather Details",
+                resultSelector: "#futureWeatherResult"
+            };
+            getWeather(endpoint, countries, resultElement);
         });
 
-        // Function to handle AJAX request for CompletableFuture weather
         $("#getCompletableFutureWeatherBtn").click(function () {
             const countries = $("#completableFutureCountries").val();
-            $.ajax({
-                url: "/api/v1/completableFutureWeather?countries=" + countries,
-                type: "GET",
-                success: function (data) {
-                    let result = "<h4>CompletableFuture Weather Details:</h4><ul>";
-                    $.each(data.weatherCountries, function (index, weatherCountry) {
-                        result += "<li>Country: " + weatherCountry.country + ", City: " + weatherCountry.city + ", Temperature: " + weatherCountry.currentTemperature + "</li>";
-                    });
-                    result += "</ul>";
-                    $("#completableFutureWeatherResult").html(result);
-                },
-                error: function (xhr, status, error) {
-                    $("#completableFutureWeatherResult").html("<p>Error retrieving CompletableFuture weather data.</p>");
-                }
-            });
+            const endpoint = "/api/v1/completableFutureWeather";
+            const resultElement = {
+                dataTitle: "Future Weather Details",
+                resultSelector: "#completableFutureWeatherResult"
+            };
+            getWeather(endpoint, countries, resultElement);
         });
     });
 </script>
